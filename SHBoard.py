@@ -3,17 +3,15 @@ import SHPolicy
 import SHRole
 
 class GameBoard:
-    def __init__(self):
-        pass
+    def __init__(self, state):
+        self.state = state
+        self.num_liberals = 6
+        self.num_fascists = 4
+        self.rolelist = [SHRole.Hitler()] + ([SHRole.Fascist()] * 3) + ([SHRole.Liberal()] * 6)
+        self.policydeck = ([SHPolicy.Liberal()] * 6) + ([SHPolicy.Fascist()] * 11)
+        self.discardpile = []
+        
 
 
-policydeck = ([SHPolicy.Liberal()] * 6) + ([SHPolicy.Fascist()] * 11)
-rolelist = [SHRole.Hitler()] + [SHRole.Fascist()] * 3 + [SHRole.Liberal()] * 6
 
-for p in policydeck:
-    print(p)
-print(len(policydeck))
 
-for r in rolelist:
-    print(r)
-print(len(rolelist))

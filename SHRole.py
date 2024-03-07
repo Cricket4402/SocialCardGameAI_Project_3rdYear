@@ -3,7 +3,7 @@ class Role:
         self.membership = membership
         self.role = role
     def __str__(self):
-        return f"{self.membership} : {self.role}"
+        return f"{self.membership} -> {self.role}"
 
 class Liberal(Role):
     def __init__(self):
