@@ -3,7 +3,7 @@ import SHPolicy
 import SHRole
 
 class GameBoard:
-    def __init__(self) -> None:
+    def __init__(self):
         pass
 
 

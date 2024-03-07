@@ -1,7 +1,3 @@
-###################################
-#              TILES              #
-###################################
-# Base class for the Liberal/Fascist tiles
 class Tile:
     def __init__(self, party):
         self.party = party
@@ -15,9 +11,3 @@ class Liberal(Tile):
 class Fascist(Tile):
     def __init__(self):
         super().__init__("Fascist")
-
-    
-
-
-
-
