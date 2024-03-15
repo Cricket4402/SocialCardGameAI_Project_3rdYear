@@ -22,6 +22,7 @@ class Player: # Abstract class
     ## Must implement all below functions ##
     def nominatechancellor(self):
         """Choose who you want to be chancellor."""
+        """Perform this action when you are president."""
         raise NotImplementedError("Player cannot nominate Chancellor")
 
     def choosepolicydiscard(self, policies):
