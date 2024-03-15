@@ -17,6 +17,9 @@ class GameState:
         self.votes = [] 
         self.players = []
 
+        # Elective action powers
+        self.inspected_players = []
+
         # Veto power
         self.veto = False # True after 5 Fascist policies enacted
 
