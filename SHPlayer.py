@@ -11,6 +11,7 @@ class Player: # Abstract class
         self.dead = False # True if killed by exec action
 
         # With 10 players, Fascists know Hitler, but Hitler doesn't know Fascists
+        # This will have a value if player is a Fascist
         self.knowshitler = None 
 
     def isfascist(self):
@@ -21,34 +22,34 @@ class Player: # Abstract class
     
     ## Must implement all below functions ##
     def nominatechancellor(self):
-        """Choose who you want to be chancellor."""
-        """Perform this action when you are president."""
+        # Choose who you want to be chancellor.
+        # Perform this action when you are president.
         raise NotImplementedError("Player cannot nominate Chancellor")
 
     def choosepolicydiscard(self, policies):
-        """Choose a policy to discard"""
-        """When 2 policies are discarded, the remaining one is enacted"""
+        # Choose a policy to discard
+        # When 2 policies are discarded, the remaining one is enacted
         raise NotImplementedError("Player cannot discard policy")
 
     def vote(self):
-        """Vote for the chosen chancellor"""
-        """Ja for yes, Nein for no"""
+        # Vote for the chosen chancellor
+        # Ja for yes, Nein for no
         raise NotImplementedError("Player cannot vote")
 
     def inspectplayer(self):
-        """Executive action for inspecting a player's party membership"""
+        # Executive action for inspecting a player's party membership
         raise NotImplementedError("Player cannot inspect another player")
     
     def choosenextpresident(self):
-        """Executive action for choosing next president"""
+        # Executive action for choosing next president
         raise NotImplementedError("Player cannot choose another president")
     
     def kill(self):
-        """Executive action for killing"""
+        # Executive action for killing
         raise NotImplementedError("Player cannot kill")
     
     def veto(self):
-        """Veto action"""
+        # Veto action
         raise NotImplementedError("Player cannot veto")
 
     
