@@ -59,7 +59,7 @@ class TestSHSelfishAgent(unittest.TestCase):
             self.assertNotEqual(x, "Ja")
 
     def test_veto(self):
-        x = self.alice.veto()
+        x = self.alice.veto([])
         if x == "ACCEPT VETO":
             self.assertEqual(x, "ACCEPT VETO")
             self.assertNotEqual(x, "REJECT VETO")
@@ -99,7 +99,6 @@ class TestSHSelfishAgent(unittest.TestCase):
         self.assertEqual(x, 0)
 
     def test_choose_policy_as_fascist(self):
-        # Use Alice here
         # First Fascist policy at index 1, so x should return 1
         pile = ["Liberal", "Fascist", "Fascist"]
         x = self.bob.choosepolicydiscard(pile)

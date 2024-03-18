@@ -1,12 +1,13 @@
 import random
 import SHPlayer
+import copy
 
 class RandomAgent(SHPlayer.Player):
     def __init__(self, id, name, party, role, state):
         super().__init__(id, name, party, role, state)
 
     def returnrandomplayer(self):
-        currentplayers = self.state.players
+        currentplayers = copy.copy(self.state.players)
         currentplayers.remove(self)
 
         r = random.randint(0, (len(currentplayers)-1))
@@ -35,7 +36,7 @@ class RandomAgent(SHPlayer.Player):
     def kill(self):
         return self.returnrandomplayer()
     
-    def veto(self):
+    def veto(self, policies):
         r = random.randint(0,1)
         if r == 1:
             return "ACCEPT VETO"

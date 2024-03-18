@@ -12,7 +12,7 @@ class Player: # Abstract class
 
         # With 10 players, Fascists know Hitler, but Hitler doesn't know Fascists
         # This will have a value if player is a Fascist
-        self.knowshitler = None 
+        self.thehitlerplayer = None 
 
     def isfascist(self):
         return self.party == "Fascist"
@@ -48,8 +48,9 @@ class Player: # Abstract class
         # Executive action for killing
         raise NotImplementedError("Player cannot kill")
     
-    def veto(self):
+    def veto(self, policies):
         # Veto action
+        # policies arg only used in CunningAgent and QAgent
         raise NotImplementedError("Player cannot veto")
 
     

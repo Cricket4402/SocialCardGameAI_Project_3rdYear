@@ -59,7 +59,7 @@ class TestSHRandomAgent(unittest.TestCase):
             self.assertNotEqual(x, "Ja")
 
     def test_veto(self):
-        x = self.alice.veto()
+        x = self.alice.veto([])
         if x == "ACCEPT VETO":
             self.assertEqual(x, "ACCEPT VETO")
             self.assertNotEqual(x, "REJECT VETO")

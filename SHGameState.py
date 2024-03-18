@@ -7,10 +7,15 @@ class GameState:
         # Election related variables
         self.current_president = None
         self.ex_president = None
-        self.chosen_president = None
+        self.chosen_president = None # Executive action choose next president
         
+        self.nominated_chancellor = None
         self.current_chancellor = None
         self.ex_chancellor = None
+
+        # Policy related
+        self.chancellor_discarded = None # The policy that chancellor discarded
+        self.president_discarded = None # The policy that president discarded
         
 
         # Player related
@@ -18,7 +23,7 @@ class GameState:
         self.players = []
 
         # Elective action powers
-        self.inspected_players = []
+        self.inspected_players = [] # (playerobject, party)
 
         # Veto power
         self.veto = False # True after 5 Fascist policies enacted
