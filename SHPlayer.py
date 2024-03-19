@@ -11,7 +11,7 @@ class Player: # Abstract class
         self.dead = False # True if killed by exec action
 
         # With 10 players, Fascists know Hitler, but Hitler doesn't know Fascists
-        # This will have a value if player is a Fascist
+        # This will have a value if player is a Fascist (including Hitler)
         self.thehitlerplayer = None 
 
     def isfascist(self):
