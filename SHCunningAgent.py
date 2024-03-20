@@ -20,12 +20,32 @@ class CunningAgent(SHPlayer.Player):
         return currentplayers[r]
     
     def nominatechancellor(self):
+
+        def voterandomchancellor():
+            currentplayers = copy.copy(self.state.players)
+            currentplayers.remove(self)
+
+            # Ex president can't be nominated
+            if (self.state.ex_president != None) and (self.state.ex_president in currentplayers): 
+                currentplayers.remove(self.state.ex_president)
+            
+            # Ex chancellor can't be nominated
+            if (self.state.ex_chancellor != None) and (self.state.ex_chancellor in currentplayers): 
+                currentplayers.remove(self.state.ex_chancellor)
+
+            r = random.randint(0, (len(currentplayers)-1))
+            return currentplayers[r]
+        
         # If secret role is Fascist, vote Hitler as Chancellor
         if self.role == "Fascist":
+            if(self.state.ex_president == self.thehitlerplayer) or (self.state.ex_chancellor == self.thehitlerplayer):
+                # If Hitler was president or chancellor last round, can't choose them, choose random instead
+                return voterandomchancellor()
             return self.thehitlerplayer
+        
         # If Hitler, vote randomly (you don't know the other Fascists)
         if self.role == "Hitler":
-            return self.returnrandomplayer()
+            return voterandomchancellor()
         # Liberals will not nominate suspicious players
         if self.role == "Liberal":
             currentplayers = copy.copy(self.state.players)
@@ -33,10 +53,18 @@ class CunningAgent(SHPlayer.Player):
 
             for sus in self.suspiciousplayers:
                 currentplayers.remove(sus)
+
+            # Ex president can't be nominated
+            if (self.state.ex_president != None) and (self.state.ex_president in currentplayers): 
+                currentplayers.remove(self.state.ex_president)
+            
+            # Ex chancellor can't be nominated
+            if (self.state.ex_chancellor != None) and (self.state.ex_chancellor in currentplayers): 
+                currentplayers.remove(self.state.ex_chancellor)
             
             if len(currentplayers) == 0: 
                 # If all players are sus, then choose randomly
-                return self.returnrandomplayer()
+                return voterandomchancellor()
             
             # Will randomly choose a player that is not suspicious
             r = random.randint(0, (len(currentplayers)-1))
@@ -82,6 +110,15 @@ class CunningAgent(SHPlayer.Player):
         
 
     def inspectplayer(self):
+        def randomplayerinspect():
+            t = copy.copy(self.state.players)
+            t.remove(self)
+            for insp in self.state.inspected_players:
+                # Can't inspect players already inspected
+                t.remove(insp[0])
+            r = random.randint(0, (len(t) - 1))
+            return t[r]
+
         # Liberals will prefer to inspect suspicious players
         if self.party == "Liberal":
             if len(self.suspiciousplayers) != 0: # If there is at least 1 sus player
@@ -92,13 +129,14 @@ class CunningAgent(SHPlayer.Player):
                 
                 newm = list(map(mappy, self.state.inspected_players))
                 for ip in newm:
-                    sussies.remove(ip)
+                    if ip in sussies:
+                        sussies.remove(ip)
                 return sussies[0]
             
             # Just pick randomly if cannot pick a sus player
-            return self.returnrandomplayer()
+            return randomplayerinspect()
         if self.party == "Fascist":
-            return self.returnrandomplayer()
+            return randomplayerinspect()
 
     def choosenextpresident(self):
         # Liberals will not nominate suspicious players

@@ -8,17 +8,9 @@ class Player: # Abstract class
 
         self.state = state # Uses Gamestate()
 
-        self.dead = False # True if killed by exec action
-
         # With 10 players, Fascists know Hitler, but Hitler doesn't know Fascists
         # This will have a value if player is a Fascist (including Hitler)
         self.thehitlerplayer = None 
-
-    def isfascist(self):
-        return self.party == "Fascist"
-    
-    def isHitler(self):
-        return self.role == "Hitler"
     
     ## Must implement all below functions ##
     def nominatechancellor(self):

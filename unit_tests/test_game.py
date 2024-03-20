@@ -63,6 +63,24 @@ class TestSHGame(unittest.TestCase):
         self.assertEqual(newi, (curi +1)%10)
         self.assertEqual(newpres, self.game.state.players[newi])
 
+    def test_vote(self):
+        result = self.game.voting()
+        ye = [True, False]
+        self.assertIn(result, ye)
+
+    def test_inspect(self):
+        self.game.assignplayergamestates()
+        self.game.assignplayerroles()
+        self.game.informfascists()
+        self.game.choosefirstpresident()
+
+        self.game.inspect()
+        tio = self.game.state.inspected_players[0][0]
+        self.assertIn(tio, self.game.state.players)
+        self.assertIsNot(tio, self.game.state.current_president)
+    
+    # TODO ADD TESTS FOR REST OF GAME FUNCTIONS
+    # CHOOSE AND ONWARDS
 
 if __name__ == "__main__":
     unittest.main()

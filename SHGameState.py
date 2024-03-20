@@ -7,8 +7,8 @@ class GameState:
         # Election related variables
         self.current_president = None
         self.ex_president = None
-        self.chosen_president = None # Executive action choose next president
-        
+        self.pre_president = None # When Special Election used, holds the last president
+
         self.nominated_chancellor = None
         self.current_chancellor = None
         self.ex_chancellor = None
@@ -19,8 +19,8 @@ class GameState:
         
 
         # Player related
-        self.votes = [] 
         self.players = []
+        self.dead_players = []
 
         # Elective action powers
         self.inspected_players = [] # (playerobject, party)

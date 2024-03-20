@@ -4,6 +4,7 @@ import sys
 sys.path.append(".")
 
 import SHSelfishAgent, SHGameState
+import random
 
 class TestSHSelfishAgent(unittest.TestCase):
     def setUp(self):
@@ -32,7 +33,8 @@ class TestSHSelfishAgent(unittest.TestCase):
         # - kill
 
         x = self.alice.returnrandomplayer()
-        self.assertIn(x, self.gstate.players)
+        r = random.randint(0, (len(x) - 1))
+        self.assertIn(x[r], self.gstate.players)
     
     def test_return_random_player_not_self(self):
         # The random player chosen is not themselves

@@ -9,12 +9,22 @@ class RandomAgent(SHPlayer.Player):
     def returnrandomplayer(self):
         currentplayers = copy.copy(self.state.players)
         currentplayers.remove(self)
+        return currentplayers
+    
+    def nominatechancellor(self):
+        currentplayers = copy.copy(self.state.players)
+        currentplayers.remove(self)
+
+        # Ex president can't be nominated
+        if (self.state.ex_president != None) and (self.state.ex_president in currentplayers): 
+            currentplayers.remove(self.state.ex_president)
+        
+        # Ex chancellor can't be nominated
+        if (self.state.ex_chancellor != None) and (self.state.ex_chancellor in currentplayers): 
+            currentplayers.remove(self.state.ex_chancellor)
 
         r = random.randint(0, (len(currentplayers)-1))
         return currentplayers[r]
-    
-    def nominatechancellor(self):
-        return self.returnrandomplayer()
     
     def choosepolicydiscard(self, policies):
         r = random.randint(0, (len(policies)-1))
@@ -28,13 +38,22 @@ class RandomAgent(SHPlayer.Player):
             return "Nein"
     
     def inspectplayer(self):
-        return self.returnrandomplayer()
+        temp = self.returnrandomplayer()
+        for insp in self.state.inspected_players:
+            # Can't inspect players already inspected
+            temp.remove(insp[0])
+        r = random.randint(0, (len(temp) - 1))
+        return temp[r]
     
     def choosenextpresident(self):
-        return self.returnrandomplayer()
+        temp = self.returnrandomplayer()
+        r = random.randint(0, (len(temp) - 1))
+        return temp[r]
     
     def kill(self):
-        return self.returnrandomplayer()
+        temp = self.returnrandomplayer()
+        r = random.randint(0, (len(temp) - 1))
+        return temp[r]
     
     def veto(self, policies):
         r = random.randint(0,1)

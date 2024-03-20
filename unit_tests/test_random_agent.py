@@ -4,6 +4,7 @@ import sys
 sys.path.append(".")
 
 import SHRandomAgent, SHGameState
+import random
 
 class TestSHRandomAgent(unittest.TestCase):
     def setUp(self):
@@ -32,12 +33,24 @@ class TestSHRandomAgent(unittest.TestCase):
         # - kill
 
         x = self.alice.returnrandomplayer()
-        self.assertIn(x, self.gstate.players)
+        r = random.randint(0, (len(x) - 1))
+        self.assertIn(x[r], self.gstate.players)
     
     def test_return_random_player_not_self(self):
         # The random player chosen is not themselves
         x = self.alice.returnrandomplayer()
         self.assertIsNot(x, self.alice)
+
+    def test_nominate_chancellor(self):
+        self.gstate.ex_chancellor = self.bob
+        self.gstate.ex_president = self.charlie
+
+        x = self.alice.nominatechancellor()
+        self.assertIn(x, self.gstate.players)
+        self.assertIsNot(x, self.alice)
+
+        self.assertIsNot(x, self.bob)
+        self.assertIsNot(x, self.charlie)
 
     def test_choose_policy_discard_3_cards(self):
         pile = ["Liberal", "Fascist", "Fascist"]
@@ -67,6 +80,12 @@ class TestSHRandomAgent(unittest.TestCase):
             self.assertEqual(x, "REJECT VETO")
             self.assertNotEqual(x, "ACCEPT VETO")
     
+    def test_inspect(self):
+        self.gstate.inspected_players.append((self.bob, self.bob.party))
+        x = self.alice.inspectplayer()
+        self.assertIn(x, self.gstate.players)
+        self.assertIsNot(x, self.alice)
+        self.assertIsNot(x, self.bob)
 
 
 

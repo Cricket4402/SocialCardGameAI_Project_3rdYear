@@ -71,6 +71,46 @@ class TestSHCunningAgent(unittest.TestCase):
         self.assertIsNot(avote, self.h)
         self.assertIsNot(avote, self.i)
 
+    def test_nominate_chancellor_as_liberal_sus_players_with_ex(self):
+        self.gstate.ex_chancellor = self.b
+        self.gstate.ex_president = self.c
+
+        self.a.suspiciousplayers.append(self.g)
+        self.a.suspiciousplayers.append(self.h)
+        self.a.suspiciousplayers.append(self.i)
+        self.assertEqual(len(self.a.suspiciousplayers), 3)
+        avote = self.a.nominatechancellor()
+        self.assertIn(avote, self.gstate.players)
+        self.assertIsNot(avote, self.a)
+
+        self.assertIsNot(avote, self.g)
+        self.assertIsNot(avote, self.h)
+        self.assertIsNot(avote, self.i)
+
+        self.assertIsNot(avote, self.b)
+        self.assertIsNot(avote, self.c)
+    
+    def test_nominate_chancellor_as_liberal_all_sus(self):
+        self.gstate.ex_chancellor = self.b
+        self.gstate.ex_president = self.c
+
+
+        self.a.suspiciousplayers.append(self.d)
+        self.a.suspiciousplayers.append(self.e)
+        self.a.suspiciousplayers.append(self.f)
+        self.a.suspiciousplayers.append(self.g)
+        self.a.suspiciousplayers.append(self.h)
+        self.a.suspiciousplayers.append(self.i)
+        self.a.suspiciousplayers.append(self.j)
+
+        self.assertEqual(len(self.a.suspiciousplayers), 7)
+        avote = self.a.nominatechancellor()
+        self.assertIn(avote, self.gstate.players)
+        self.assertIsNot(avote, self.a)
+
+        self.assertIsNot(avote, self.b)
+        self.assertIsNot(avote, self.c)
+
     def test_choose_policy_discard_as_fascist(self):
         pile = ["Liberal", "Fascist", "Fascist"]
         x = self.g.choosepolicydiscard(pile)
@@ -164,15 +204,23 @@ class TestSHCunningAgent(unittest.TestCase):
             self.assertNotEqual(x, "Ja")
 
     def test_inspect_player_as_fascist(self):
+        self.gstate.inspected_players.append((self.a, self.a.party))
+        self.gstate.inspected_players.append((self.b, self.b.party))
         x = self.g.inspectplayer()
         self.assertIn(x, self.gstate.players)
         self.assertIsNot(x, self.g)
+        self.assertIsNot(x, self.a)
+        self.assertIsNot(x, self.b)
     
     def test_inspect_player_as_liberal(self):
+        self.gstate.inspected_players.append((self.h, self.h.party))
+        self.gstate.inspected_players.append((self.i, self.i.party))
         # Inspect player - no suspicions
         i1 = self.a.inspectplayer()
         self.assertIn(i1, self.gstate.players)
         self.assertIsNot(i1, self.a)
+        self.assertIsNot(i1, self.h)
+        self.assertIsNot(i1, self.i)
 
         # Inspect player - 1 sus
         self.a.suspiciousplayers.append(self.b)
@@ -182,6 +230,8 @@ class TestSHCunningAgent(unittest.TestCase):
         self.assertIn(i2, self.gstate.players)
         self.assertIn(i2, self.a.suspiciousplayers)
         self.assertEqual(i2, self.b)
+        self.assertIsNot(i1, self.h)
+        self.assertIsNot(i1, self.i)
 
         # Inpsect player - 1 already inspected, 1 sus
         self.gstate.inspected_players.append((self.b, self.b.party))
@@ -190,6 +240,8 @@ class TestSHCunningAgent(unittest.TestCase):
         self.assertIn(i3, self.gstate.players)
         self.assertIn(i3, self.a.suspiciousplayers)
         self.assertEqual(i3, self.c)
+        self.assertIsNot(i1, self.h)
+        self.assertIsNot(i1, self.i)
 
     def test_choose_next_president_as_fascist(self):
         v1 = self.g.choosenextpresident()
