@@ -12,6 +12,13 @@ class RandomAgent(SHPlayer.Player):
         return currentplayers
     
     def nominatechancellor(self):
+
+        # def shownames(player):
+        #     return player.name
+        
+        # x = list(map(shownames, copy.copy(self.state.players)))
+        # print(x)
+
         currentplayers = copy.copy(self.state.players)
         currentplayers.remove(self)
 

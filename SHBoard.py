@@ -36,7 +36,9 @@ class GameBoard:
             return draw
         else: # shuffle discard pile back
             self.shufflediscardback()
-            return self.drawpolicy(n) # This should never loop
+            draw2 = self.policydeck[:n]
+            self.policydeck = self.policydeck[n:] # removes the top 3 policies
+            return draw2
     
     def discardpolicy(self, policies, choice):
         try:
@@ -54,6 +56,3 @@ class GameBoard:
             self.state.libtracker += 1
         else:
             self.state.fasctracker += 1
-            if self.fascistactions[self.state.fasctracker - 1] is not None:
-                return True
-        return False

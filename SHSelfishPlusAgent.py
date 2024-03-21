@@ -3,13 +3,9 @@ import SHPlayer
 import copy
 # import SHGameState
 
-class CunningAgent(SHPlayer.Player):
+class SelfishPlus(SHPlayer.Player):
     def __init__(self, id, name, party, role, state):
         super().__init__(id, name, party, role, state)
-
-        # A cunning agent will remember if certain players act sus
-        # Holds playerobject
-        self.suspiciousplayers = []
 
     def returnrandomplayer(self):
         currentplayers = copy.copy(self.state.players)
@@ -46,13 +42,10 @@ class CunningAgent(SHPlayer.Player):
         # If Hitler, vote randomly (you don't know the other Fascists)
         if self.role == "Hitler":
             return voterandomchancellor()
-        # Liberals will not nominate suspicious players
+
         if self.role == "Liberal":
             currentplayers = copy.copy(self.state.players)
             currentplayers.remove(self)
-
-            for sus in self.suspiciousplayers:
-                currentplayers.remove(sus)
 
             # Ex president can't be nominated
             if (self.state.ex_president != None) and (self.state.ex_president in currentplayers): 
@@ -62,11 +55,6 @@ class CunningAgent(SHPlayer.Player):
             if (self.state.ex_chancellor != None) and (self.state.ex_chancellor in currentplayers): 
                 currentplayers.remove(self.state.ex_chancellor)
             
-            if len(currentplayers) == 0: 
-                # If all players are sus, then choose randomly
-                return voterandomchancellor()
-            
-            # Will randomly choose a player that is not suspicious
             r = random.randint(0, (len(currentplayers)-1))
             return currentplayers[r]
             
@@ -88,12 +76,12 @@ class CunningAgent(SHPlayer.Player):
             return policies.index("Liberal")
 
     def vote(self):
-        # Liberals will not vote for sus players
         if self.role == "Liberal":
-            for p in self.suspiciousplayers:
-                if p == self.state.nominated_chancellor:
-                    return "Nein"
-            return "Ja"
+            r = random.randint(0,1)
+            if r == 1:
+                return "Ja"
+            else:
+                return "Nein"
         # Fascists will vote against Liberal players
         if self.role == "Fascist":
             if self.state.nominated_chancellor.party == "Liberal":
@@ -119,36 +107,15 @@ class CunningAgent(SHPlayer.Player):
             r = random.randint(0, (len(t) - 1))
             return t[r]
 
-        # Liberals will prefer to inspect suspicious players
         if self.party == "Liberal":
-            if len(self.suspiciousplayers) != 0: # If there is at least 1 sus player
-                sussies = copy.copy(self.suspiciousplayers)
-
-                def mappy(tup):
-                    return tup[0]
-                
-                newm = list(map(mappy, self.state.inspected_players))
-                for ip in newm:
-                    if ip in sussies:
-                        sussies.remove(ip)
-                return sussies[0]
-            
-            # Just pick randomly if cannot pick a sus player
             return randomplayerinspect()
         if self.party == "Fascist":
             return randomplayerinspect()
 
     def choosenextpresident(self):
-        # Liberals will not nominate suspicious players
         if self.role == "Liberal":
             nominees = copy.copy(self.state.players)
             nominees.remove(self)
-
-            for sus in self.suspiciousplayers:
-                nominees.remove(sus)
-
-            if len(nominees) == 0:
-                return self.returnrandomplayer()
             
             r = random.randint(0, (len(nominees)-1))
             return nominees[r]
@@ -172,13 +139,13 @@ class CunningAgent(SHPlayer.Player):
             return self.returnrandomplayer()
 
     def kill(self):
-        # Kill sus players
+        # Kill Fascists
         if self.role == "Liberal":
-            if len(self.suspiciousplayers) != 0:
-                r = random.randint(0, (len(self.suspiciousplayers)-1))
-                return self.suspiciousplayers[r]
-            else:
-                return self.returnrandomplayer()
+            for x in self.state.inspected_players:
+                if x[1] == "Fascist" and x[0] in self.state.players:
+                    return x[0]
+            # Else return random player
+            return self.returnrandomplayer()
 
         # Kill Liberal players
         if self.role == "Fascist":

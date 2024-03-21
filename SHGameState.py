@@ -8,6 +8,7 @@ class GameState:
         self.current_president = None
         self.ex_president = None
         self.pre_president = None # When Special Election used, holds the last president
+        self.after_pre_president = None # The president player who should come after pre_pres
 
         self.nominated_chancellor = None
         self.current_chancellor = None
@@ -24,7 +25,4 @@ class GameState:
 
         # Elective action powers
         self.inspected_players = [] # (playerobject, party)
-
-        # Veto power
-        self.veto = False # True after 5 Fascist policies enacted
 
