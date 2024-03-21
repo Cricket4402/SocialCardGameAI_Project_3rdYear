@@ -217,7 +217,7 @@ class SHGame:
                 if veto_status:
                     # If veto passes
                     # Send remaining into discard pile
-                    self.board.discardpile.append(remainingpolicies)
+                    self.board.discardpile.extend(remainingpolicies)
                     self.failedvote()
                     # Game ends if enacted policies == gg
                     # Otherwise, ends turn early
