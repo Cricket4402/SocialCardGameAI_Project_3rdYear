@@ -308,6 +308,6 @@ class SHGame:
             # Liberals kill Hitler win
             return 4
         else:
-            return 5
+            return "Error"
 
         

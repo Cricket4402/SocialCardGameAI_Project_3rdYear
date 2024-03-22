@@ -3,7 +3,7 @@ import unittest
 import sys
 sys.path.append(".")
 
-import SHRandomAgent, SHSelfishAgent, SHSelfishPlusAgent
+import SHRandomAgent, SHSelfishAgent, SHSelfishPlusPlusAgent
 import SHGame
 
 class TestSHGame(unittest.TestCase):
@@ -245,7 +245,7 @@ class TestSHGame(unittest.TestCase):
         g = SHGame.SHGame()
         for i in range(0, 10):
             name = "Cunning" + str(i)
-            x = SHSelfishPlusAgent.SelfishPlus(i, name, "", "", "")
+            x = SHSelfishPlusPlusAgent.SelfishPlusPlus(i, name, "", "", "")
             g.state.players.append(x)
 
         final = g.play()

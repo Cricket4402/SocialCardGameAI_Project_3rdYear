@@ -3,9 +3,12 @@ import SHPlayer
 import copy
 # import SHGameState
 
-class SelfishPlus(SHPlayer.Player):
+class SelfishPlusPlus(SHPlayer.Player):
     def __init__(self, id, name, party, role, state):
         super().__init__(id, name, party, role, state)
+
+    def __str__(self):
+        return "Selfish++Agent"
 
     def returnrandomplayer(self):
         currentplayers = copy.copy(self.state.players)

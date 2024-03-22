@@ -4,6 +4,9 @@ class SelfishAgent(SHRandomAgent.RandomAgent):
     # Same as random agent except when discarding policies
     def __init__(self, id, name, party, role, state):
         super().__init__(id, name, party, role, state)
+
+    def __str__(self):
+        return "SelfishAgent"
     
     def choosepolicydiscard(self, policies):
         cparty = self.party

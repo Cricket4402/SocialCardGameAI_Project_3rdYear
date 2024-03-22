@@ -3,24 +3,24 @@ import unittest
 import sys
 sys.path.append(".")
 
-import SHSelfishPlusAgent, SHGameState
+import SHSelfishPlusPlusAgent, SHGameState
 
-class TestSHSelfishPlusAgent(unittest.TestCase):
+class TestSHSelfishPlusPlusAgent(unittest.TestCase):
     def setUp(self):
         self.gstate = SHGameState.GameState()
 
-        self.a = SHSelfishPlusAgent.SelfishPlus(0, "Alice", "Liberal", "Liberal", self.gstate)
-        self.b = SHSelfishPlusAgent.SelfishPlus(1, "Bob", "Liberal", "Liberal", self.gstate)
-        self.c = SHSelfishPlusAgent.SelfishPlus(2, "Charlie", "Liberal", "Liberal", self.gstate)
-        self.d = SHSelfishPlusAgent.SelfishPlus(3, "Dave", "Liberal", "Liberal", self.gstate)
-        self.e = SHSelfishPlusAgent.SelfishPlus(4, "Eve", "Liberal", "Liberal", self.gstate)
-        self.f = SHSelfishPlusAgent.SelfishPlus(5, "Fred", "Liberal", "Liberal", self.gstate)
+        self.a = SHSelfishPlusPlusAgent.SelfishPlusPlus(0, "Alice", "Liberal", "Liberal", self.gstate)
+        self.b = SHSelfishPlusPlusAgent.SelfishPlusPlus(1, "Bob", "Liberal", "Liberal", self.gstate)
+        self.c = SHSelfishPlusPlusAgent.SelfishPlusPlus(2, "Charlie", "Liberal", "Liberal", self.gstate)
+        self.d = SHSelfishPlusPlusAgent.SelfishPlusPlus(3, "Dave", "Liberal", "Liberal", self.gstate)
+        self.e = SHSelfishPlusPlusAgent.SelfishPlusPlus(4, "Eve", "Liberal", "Liberal", self.gstate)
+        self.f = SHSelfishPlusPlusAgent.SelfishPlusPlus(5, "Fred", "Liberal", "Liberal", self.gstate)
 
-        self.g = SHSelfishPlusAgent.SelfishPlus(6, "George", "Fascist", "Fascist", self.gstate)
-        self.h = SHSelfishPlusAgent.SelfishPlus(7, "Harry", "Fascist", "Fascist", self.gstate)
-        self.i = SHSelfishPlusAgent.SelfishPlus(8, "Irene", "Fascist", "Fascist", self.gstate)
+        self.g = SHSelfishPlusPlusAgent.SelfishPlusPlus(6, "George", "Fascist", "Fascist", self.gstate)
+        self.h = SHSelfishPlusPlusAgent.SelfishPlusPlus(7, "Harry", "Fascist", "Fascist", self.gstate)
+        self.i = SHSelfishPlusPlusAgent.SelfishPlusPlus(8, "Irene", "Fascist", "Fascist", self.gstate)
 
-        self.j = SHSelfishPlusAgent.SelfishPlus(9, "Jack", "Fascist", "Hitler", self.gstate)
+        self.j = SHSelfishPlusPlusAgent.SelfishPlusPlus(9, "Jack", "Fascist", "Hitler", self.gstate)
 
         self.gstate.players.append(self.a)
         self.gstate.players.append(self.b)
