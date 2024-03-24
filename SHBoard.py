@@ -13,9 +13,7 @@ class GameBoard:
         # Fascist actions
         self.fascistactions = ["inspect", "inspect", "choose", "kill", "kill", None]
 
-        # Shuffles the roles - player in position i gets the role in position i
-        self.rolelist = [("Fascist", "Hitler")] + ([("Fascist", "Fascist")] * 3) + ([("Liberal", "Liberal")] * 6)
-        random.shuffle(self.rolelist)
+        
 
         # Shuffle the policy deck
         self.policydeck = (["Liberal"] * 6) + (["Fascist"] * 11)

@@ -1,5 +1,10 @@
+import random
+
 class GameState:
     def __init__(self):
+        # Shuffles the roles - player in position i gets the role in position i
+        self.rolelist = [("Fascist", "Hitler")] + ([("Fascist", "Fascist")] * 3) + ([("Liberal", "Liberal")] * 6)
+        random.shuffle(self.rolelist)
 
         # Election related variables
         self.current_president = None

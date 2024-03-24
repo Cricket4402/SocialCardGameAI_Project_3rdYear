@@ -18,5 +18,7 @@ class TestSHGameState(unittest.TestCase):
         self.assertEqual(len(x.players), 0)
         self.assertEqual(len(x.dead_players), 0)
 
+        self.assertEqual(len(x.rolelist), 10)
+
 if __name__ == "__main__":
     unittest.main()

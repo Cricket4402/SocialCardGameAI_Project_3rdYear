@@ -19,7 +19,7 @@ class SHGame:
             p.state = self.state
 
     def assignplayerroles(self):
-        rolearr = self.board.rolelist
+        rolearr = self.state.rolelist
         players = self.state.players
         for i in range(0, len(players)): # 10 players, goes up to index 9
             players[i].party = rolearr[i][0]

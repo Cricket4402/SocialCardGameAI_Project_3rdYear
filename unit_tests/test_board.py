@@ -10,25 +10,24 @@ class TestSHBoard(unittest.TestCase):
     
     def setUp(self):
         # Use this for most of the tests
-        self.board = SHBoard.GameBoard(SHGameState.GameState())
+        self.board = SHBoard.GameBoard()
 
 
     def test_board_policy_deck_size(self):
         self.assertEqual(len(self.board.policydeck), 17)
     
-    def test_board_role_list_size(self):
-        self.assertEqual(len(self.board.rolelist), 10)
+    
 
 
     #### SHUFFLE DISCARD PILE TESTS ####
     def test_shuffle_empty_pile(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         x.shufflediscardback()
         self.assertEqual(len(x.discardpile), 0)
         self.assertEqual(len(x.policydeck), 17)
     
     def test_shuffle_arbitrary_pile(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         x.discardpile = ["X", "Y", "Z"] # Placeholder tokens
         self.assertEqual(len(x.discardpile), 3)
         self.assertEqual(len(x.policydeck), 17)
@@ -40,14 +39,14 @@ class TestSHBoard(unittest.TestCase):
     #### DRAW/DISCARD POLICY TESTS ####
     def test_draw_policy_check_size(self):
         # Check the size of the policydeck does indeed change
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         x.drawpolicy(3)
         self.assertEqual(len(x.policydeck), 14)
     
     def test_draw_policy_check_size_2(self):
         # Check the size of the policydeck does indeed change
         # Performed until only 2 policies are left
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
 
         for i in range(1,6): # 3 x 5 = 15, so 17 - 15 = 2 policies left
             x.drawpolicy(3)
@@ -55,7 +54,7 @@ class TestSHBoard(unittest.TestCase):
         self.assertEqual(len(x.policydeck), 2)
     
     def test_discard_policy_isolated(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         temp = x.discardpolicy(["X", "Y", "Z"], 0) # Discard index 0
 
         self.assertEqual(len(x.discardpile), 1)
@@ -72,7 +71,7 @@ class TestSHBoard(unittest.TestCase):
         self.assertEqual(temp2[0], "Y")
 
     def test_discard_policy_fail(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         # False
         temp = x.discardpolicy(["X", "Y", "Z"], 5) 
         self.assertFalse(temp)
@@ -95,7 +94,7 @@ class TestSHBoard(unittest.TestCase):
 
     #### ENACT POLICY TESTS ####
     def test_draw_discard_discard_enact(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
 
         # Draw 3
         drawn1 = copy.deepcopy(x.policydeck[:3])
@@ -142,7 +141,7 @@ class TestSHBoard(unittest.TestCase):
         self.assertEqual((len(x.policydeck) + len(x.discardpile)), 16)
 
     def test_full_deck_cycled(self):
-        x = SHBoard.GameBoard(SHGameState.GameState())
+        x = SHBoard.GameBoard()
         lib = 0
         fasc = 0
         for i in range(1, 7):
