@@ -221,7 +221,7 @@ class TestSHGame(unittest.TestCase):
         result = self.game.turn()
 
         # If vote doesn't fail, then it should result in game ending 
-        if self.game.state.failedvotes != 0:
+        if self.game.board.failedvotes != 0:
             self.assertFalse(result)
         else:
             self.assertTrue(result)
