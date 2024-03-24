@@ -117,46 +117,46 @@ class TestSHGame(unittest.TestCase):
     def test_failed_vote(self):
         self.game.failedvote()
         self.assertEqual(len(self.game.board.policydeck), 17)
-        self.assertEqual(self.game.state.failedvotes, 1)
+        self.assertEqual(self.game.board.failedvotes, 1)
 
         self.game.failedvote()
         self.assertEqual(len(self.game.board.policydeck), 17)
-        self.assertEqual(self.game.state.failedvotes, 2)
+        self.assertEqual(self.game.board.failedvotes, 2)
 
         self.game.failedvote()
         self.assertEqual(len(self.game.board.policydeck), 16)
-        self.assertEqual(self.game.state.failedvotes, 0)
+        self.assertEqual(self.game.board.failedvotes, 0)
 
     ### WIN CONDITION TESTS ###
 
     def test_hitler_chancellor_win(self):
         self.game.state.current_chancellor = self.game.hitler
 
-        self.game.state.fasctracker = 2
+        self.game.board.fasctracker = 2
         r1 = self.game.hitlerchancellorwincon()
         self.assertFalse(r1)
 
-        self.game.state.fasctracker = 3
+        self.game.board.fasctracker = 3
         r2 = self.game.hitlerchancellorwincon()
         self.assertTrue(r2)
 
-        self.game.state.fasctracker = 4
+        self.game.board.fasctracker = 4
         r3 = self.game.hitlerchancellorwincon()
         self.assertTrue(r3)
 
     def test_policy_win(self):
-        self.game.state.libtracker = 4
-        self.game.state.fasctracker = 5
+        self.game.board.libtracker = 4
+        self.game.board.fasctracker = 5
         r1 = self.game.policywincon()
         self.assertFalse(r1)
 
-        self.game.state.libtracker = 5
-        self.game.state.fasctracker = 5
+        self.game.board.libtracker = 5
+        self.game.board.fasctracker = 5
         r2 = self.game.policywincon()
         self.assertTrue(r2)
         
-        self.game.state.libtracker = 4
-        self.game.state.fasctracker = 6
+        self.game.board.libtracker = 4
+        self.game.board.fasctracker = 6
         r3 = self.game.policywincon()
         self.assertTrue(r3)
 
@@ -187,7 +187,7 @@ class TestSHGame(unittest.TestCase):
         result = self.game.turn()
         self.assertFalse(result)
 
-        if self.game.state.fasctracker == 1:
+        if self.game.board.fasctracker == 1:
             self.assertEqual(len(self.game.state.inspected_players), 1)
             self.assertIn(self.game.state.inspected_players[0][0], self.game.state.players)
 
@@ -197,16 +197,16 @@ class TestSHGame(unittest.TestCase):
         self.game.informfascists()
         self.game.choosefirstpresident()
 
-        self.game.state.libtracker = 4
-        self.game.state.fasctracker = 5
+        self.game.board.libtracker = 4
+        self.game.board.fasctracker = 5
 
         result = self.game.turn()
-        if self.game.state.libtracker == 5 or self.game.state.fasctracker == 6:
+        if self.game.board.libtracker == 5 or self.game.board.fasctracker == 6:
             self.assertTrue(result)
         else:
             # If game doesn't end, veto happened, so failed vote is up 1
             self.assertFalse(result)
-            self.assertEqual(self.game.state.failedvotes, 1)
+            self.assertEqual(self.game.board.failedvotes, 1)
     
     def test_turn_hitler_killed(self):
         self.game.assignplayergamestates()

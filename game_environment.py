@@ -3,7 +3,7 @@ import SHRandomAgent, SHSelfishAgent, SHSelfishPlusPlusAgent
 import random
 import time
 
-n = 20000
+n = 30000
 
 libpol = 0
 faspol = 0
@@ -107,8 +107,6 @@ def botmaker(name):
         return SHSelfishAgent.SelfishAgent(i, name, "", "", "")
     elif r == 3:
         return SHSelfishPlusPlusAgent.SelfishPlusPlus(i, name, "", "", "")
-    # elif r == 4:
-    #     return SHQLearnAgent.QLearn(i, name, "", "", "")
 
 
 start = time.time()
@@ -119,7 +117,6 @@ for i in range(0, n):
     # bot0 = SHRandomAgent.RandomAgent(i, "RandomRoss", "", "", "")
     # bot1 = SHSelfishAgent.SelfishAgent(i, "SelfishSteve", "", "", "")
     # bot2 = SHSelfishPlusPlusAgent.SelfishPlusPlus(i, "SPlusSarah", "", "", "")
-    # bot3 = SHQLearnAgent.QLearn(i, "QLearnQiyana", "", "", "")
 
     # game.state.players.append(bot0)
     # game.state.players.append(bot1)

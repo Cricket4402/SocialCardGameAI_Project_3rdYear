@@ -8,9 +8,6 @@ import SHGameState
 class TestSHGameState(unittest.TestCase):
     def test_default_gamestate_values(self):
         x = SHGameState.GameState()
-        self.assertEqual(x.libtracker, 0)
-        self.assertEqual(x.fasctracker, 0)
-        self.assertEqual(x.failedvotes, 0)
 
         self.assertIsNone(x.current_president)
         self.assertIsNone(x.ex_president)

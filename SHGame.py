@@ -118,14 +118,14 @@ class SHGame:
         if self.outputconsole:
             print("Vote failed!")
 
-        self.state.failedvotes = self.state.failedvotes + 1
-        if self.state.failedvotes == 3:
+        self.board.failedvotes = self.board.failedvotes + 1
+        if self.board.failedvotes == 3:
             
             # Debug
             if self.outputconsole:
                 print("3 votes failed! Chaos ensues, enact top policy")
 
-            self.state.failedvotes = 0
+            self.board.failedvotes = 0
             
             # Enact policy on the top of the deck
             self.board.enactpolicy(self.board.drawpolicy(1)[0])
@@ -134,12 +134,12 @@ class SHGame:
     # GAME-ENDING CONDITIONS
     def hitlerchancellorwincon(self):
         # If Hitler is elected with 3+ Fascist policies, end game
-        if (self.state.current_chancellor == self.hitler) and (self.state.fasctracker >= 3):
+        if (self.state.current_chancellor == self.hitler) and (self.board.fasctracker >= 3):
             return True
         return False
 
     def policywincon(self):
-        if (self.state.libtracker == 5) or (self.state.fasctracker == 6):
+        if (self.board.libtracker == 5) or (self.board.fasctracker == 6):
             return True
         return False
 
@@ -153,7 +153,7 @@ class SHGame:
 
         # Debug
         if self.outputconsole:
-            print("Fascist policies: " + str(self.state.fasctracker) + " Liberal policies: " + str(self.state.libtracker))
+            print("Fascist policies: " + str(self.board.fasctracker) + " Liberal policies: " + str(self.board.libtracker))
             print("Deck: " + str(len(self.board.policydeck)) + " Discard: " + str(len(self.board.discardpile)))
 
         if self.specialelection == False:
@@ -206,13 +206,17 @@ class SHGame:
             # Return value 2 for Fascist policy win
             # Draw 3 policies
             drawnpolicies = self.board.drawpolicy(3)
+            
             # Current president chooses 1 to discard
             pdiscardchoice = self.state.current_president.choosepolicydiscard(drawnpolicies)
+            # Show what policy the president discarded
+            self.state.president_discarded = drawnpolicies[pdiscardchoice]
+
             # Remaining policies left (2 in the hand)
             remainingpolicies = self.board.discardpolicy(drawnpolicies, pdiscardchoice)
 
             # If 5 Fascist policies enacted, enable veto
-            if self.state.fasctracker == 5:
+            if self.board.fasctracker == 5:
                 veto_status = self.veto(remainingpolicies)
                 if veto_status:
                     # If veto passes
@@ -225,6 +229,14 @@ class SHGame:
 
             # Current chancellor chooses 1 to discard
             cdiscardchoice = self.state.current_chancellor.choosepolicydiscard(remainingpolicies)
+            # Show what policy the chancellor discarded
+            self.state.chancellor_discarded = remainingpolicies[cdiscardchoice]
+
+            # Debug
+            if self.outputconsole:
+                print(f"Chancellor {self.state.current_chancellor.name} discarded {self.state.chancellor_discarded} policy")
+                print(f"President {self.state.current_president.name} discarded {self.state.president_discarded} policy")
+
             # The final policy remaining after 2 have been discarded
             finalpolicy = self.board.discardpolicy(remainingpolicies, cdiscardchoice)
             # Enact the policy
@@ -241,8 +253,8 @@ class SHGame:
             # Perform executive action if applicable
             
             if finalpolicy[0] == "Fascist":
-                if self.board.fascistactions[self.state.fasctracker - 1] is not None:
-                    execaction = self.board.fascistactions[self.state.fasctracker - 1]
+                if self.board.fascistactions[self.board.fasctracker - 1] is not None:
+                    execaction = self.board.fascistactions[self.board.fasctracker - 1]
                     
                     # Debug
                     if self.outputconsole:
@@ -270,6 +282,9 @@ class SHGame:
             self.state.nominated_chancellor = None
             self.state.current_chancellor = None
 
+            self.state.chancellor_discarded = None
+            self.state.president_discarded = None
+
             return False
 
     ###########################################
@@ -295,10 +310,10 @@ class SHGame:
         return game_over
     
     def wincon(self):
-        if self.state.libtracker == 5:
+        if self.board.libtracker == 5:
             # Liberal policy win
             return 1
-        elif self.state.fasctracker == 6:
+        elif self.board.fasctracker == 6:
             # Fascist policy win
             return 2
         elif self.hitlerchancellorwincon():

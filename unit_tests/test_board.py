@@ -132,12 +132,12 @@ class TestSHBoard(unittest.TestCase):
 
         if hand3[0] == "Liberal":
             lib += 1
-            self.assertEqual(x.state.libtracker, lib)
-            self.assertEqual(x.state.fasctracker, fasc)
+            self.assertEqual(x.libtracker, lib)
+            self.assertEqual(x.fasctracker, fasc)
         else:
             fasc += 1
-            self.assertEqual(x.state.libtracker, lib)
-            self.assertEqual(x.state.fasctracker, fasc)
+            self.assertEqual(x.libtracker, lib)
+            self.assertEqual(x.fasctracker, fasc)
         
         self.assertEqual((len(x.policydeck) + len(x.discardpile)), 16)
 
@@ -157,9 +157,9 @@ class TestSHBoard(unittest.TestCase):
             else:
                 fasc += 1
         
-        self.assertEqual(lib, x.state.libtracker)
-        self.assertEqual(fasc, x.state.fasctracker)
-        self.assertEqual(x.state.fasctracker + x.state.libtracker, 6)
+        self.assertEqual(lib, x.libtracker)
+        self.assertEqual(fasc, x.fasctracker)
+        self.assertEqual(x.fasctracker + x.libtracker, 6)
         self.assertEqual((len(x.policydeck) + len(x.discardpile)), 11)
         self.assertEqual(len(x.policydeck), 9)
         self.assertEqual(len(x.discardpile), 2)

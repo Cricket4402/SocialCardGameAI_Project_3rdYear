@@ -7,6 +7,10 @@ class GameBoard:
     def __init__(self, state):
         self.state = state
 
+        self.libtracker = 0 # 5 needed to win as Liberals
+        self.fasctracker = 0 # 6 needed to win as Fascists, 3 to allow Hitler wincon
+        self.failedvotes = 0 # 3 needed for Election Tracker case - read rules for details
+
         # Fascist actions
         self.fascistactions = ["inspect", "inspect", "choose", "kill", "kill", None]
 
@@ -53,6 +57,6 @@ class GameBoard:
         # If no executive action can be used, return False
         # Else return True
         if policy == "Liberal":
-            self.state.libtracker += 1
+            self.libtracker += 1
         else:
-            self.state.fasctracker += 1
+            self.fasctracker += 1
