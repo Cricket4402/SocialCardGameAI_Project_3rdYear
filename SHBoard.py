@@ -4,8 +4,7 @@ import random
 # Policy Deck + Roles
 
 class GameBoard:
-    def __init__(self, state):
-        self.state = state
+    def __init__(self):
 
         self.libtracker = 0 # 5 needed to win as Liberals
         self.fasctracker = 0 # 6 needed to win as Fascists, 3 to allow Hitler wincon

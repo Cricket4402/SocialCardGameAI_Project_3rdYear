@@ -9,7 +9,7 @@ class SHGame:
         self.outputlogs = outputlogs
 
         self.state = SHGameState.GameState()
-        self.board = SHBoard.GameBoard(self.state)
+        self.board = SHBoard.GameBoard()
         self.hitler = None # Just to make it easier to check Hitler related stuff
 
         self.specialelection = False # True if special election action used
