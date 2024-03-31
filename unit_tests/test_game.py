@@ -226,7 +226,7 @@ class TestSHGame(unittest.TestCase):
         else:
             self.assertTrue(result)
 
-    def test_play_random(self):
+    def test_play(self):
         # Test to see if the game ends
         final = self.game.play()
         self.assertTrue(final)
