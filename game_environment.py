@@ -3,6 +3,7 @@ import SHRandomAgent, SHSelfishAgent, SHSelfishPlusPlusAgent
 import random
 import time
 
+# Number of games to run
 n = 30000
 
 libpol = 0
