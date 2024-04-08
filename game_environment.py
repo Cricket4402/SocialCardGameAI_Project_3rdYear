@@ -1,10 +1,10 @@
 import SHGame
-import SHRandomAgent, SHSelfishAgent, SHSelfishPlusPlusAgent
+import SHRandomAgent, SHSelfishAgent, SHSelfishPlusPlusAgent, SHDQLAgent
 import random
 import time
 
 # Number of games to run
-n = 30000
+n = 13000
 
 libpol = 0
 faspol = 0
@@ -14,10 +14,12 @@ killhit = 0
 randomagentwins = [0, 0, 0]
 selfishagentwins = [0, 0, 0]
 splusagentwins = [0, 0, 0]
+dqlwins = [0, 0, 0]
 
 raloss = [0, 0, 0]
 saloss = [0, 0, 0]
 spaloss = [0, 0, 0]
+dqlloss = [0, 0, 0]
 
 def agentwinlosscounter(winvalue, players):
     
@@ -60,6 +62,8 @@ def agentwinlosscounter(winvalue, players):
             selfishagentwins[0] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in libagents:
             splusagentwins[0] += 1
+        if SHDQLAgent.DQLAgent in libagents:
+            dqlwins[0] += 1
 
         # Assign losses to Fascists/Hitler
         if SHRandomAgent.RandomAgent in fascagents:
@@ -68,6 +72,8 @@ def agentwinlosscounter(winvalue, players):
             saloss[1] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in fascagents:
             spaloss[1] += 1
+        if SHDQLAgent.DQLAgent in fascagents:
+            dqlloss[1] += 1
 
         if SHRandomAgent.RandomAgent in hitleragents:
             raloss[2] += 1
@@ -75,6 +81,8 @@ def agentwinlosscounter(winvalue, players):
             saloss[2] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in hitleragents:
             spaloss[2] += 1
+        if SHDQLAgent.DQLAgent in hitleragents:
+            dqlloss[2] += 1
     elif winvalue == 2 or winvalue == 3:
         # Assign wins to Fascists/Hitler
         if SHRandomAgent.RandomAgent in fascagents:
@@ -83,6 +91,8 @@ def agentwinlosscounter(winvalue, players):
             selfishagentwins[1] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in fascagents:
             splusagentwins[1] += 1
+        if SHDQLAgent.DQLAgent in fascagents:
+            dqlwins[1] += 1
         
         if SHRandomAgent.RandomAgent in hitleragents:
             randomagentwins[2] += 1
@@ -90,6 +100,8 @@ def agentwinlosscounter(winvalue, players):
             selfishagentwins[2] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in hitleragents:
             splusagentwins[2] += 1
+        if SHDQLAgent.DQLAgent in hitleragents:
+            dqlwins[2] += 1
 
         # Assign losses to Liberals
         if SHRandomAgent.RandomAgent in libagents:
@@ -98,16 +110,20 @@ def agentwinlosscounter(winvalue, players):
             saloss[0] += 1
         if SHSelfishPlusPlusAgent.SelfishPlusPlus in libagents:
             spaloss[0] += 1
+        if SHDQLAgent.DQLAgent in libagents:
+            dqlloss[0] += 1
 
 
 def botmaker(name):
-    r = random.randint(1,3)
+    r = random.randint(1,4)
     if r == 1:
         return SHRandomAgent.RandomAgent(i, name, "", "", "")
     elif r == 2:
         return SHSelfishAgent.SelfishAgent(i, name, "", "", "")
     elif r == 3:
         return SHSelfishPlusPlusAgent.SelfishPlusPlus(i, name, "", "", "")
+    elif r == 4:
+        return SHDQLAgent.DQLAgent(i, name, "", "", "")
 
 
 start = time.time()
@@ -143,6 +159,7 @@ for i in range(0, n):
     allplayers = game.state.players + game.state.dead_players
     agentwinlosscounter(game.wincon(), allplayers)
 
+
     # for i in range(0, len(allplayers)):
     #     print(f"Player {i}: Class: {str(allplayers[i])} Role: {allplayers[i].role}")
 
@@ -159,11 +176,12 @@ print(f"Total games played: {libpol + faspol + hitelect + killhit}")
 print(f"Random agent wins: Liberal: {randomagentwins[0]} Fascist: {randomagentwins[1]} Hitler: {randomagentwins[2]}")
 print(f"Selfish agent wins: Liberal: {selfishagentwins[0]} Fascist: {selfishagentwins[1]} Hitler: {selfishagentwins[2]}")
 print(f"Selfish+ agent wins: Liberal: {splusagentwins[0]} Fascist: {splusagentwins[1]} Hitler: {splusagentwins[2]}")
+print(f"DQL agent wins: Liberal: {dqlwins[0]} Fascist: {dqlwins[1]} Hitler: {dqlwins[2]}")
 print("------------------------------------------------------")
 print(f"Random agent losses: Liberal: {raloss[0]} Fascist: {raloss[1]} Hitler: {raloss[2]}")
 print(f"Selfish agent losses: Liberal: {saloss[0]} Fascist: {saloss[1]} Hitler: {saloss[2]}")
 print(f"Selfish+ agent losses: Liberal: {spaloss[0]} Fascist: {spaloss[1]} Hitler: {spaloss[2]}")
-
+print(f"DQL agent losses: Liberal: {dqlloss[0]} Fascist: {dqlloss[1]} Hitler: {dqlloss[2]}")
 print("======================================================")
 
 print(f"""Random agent role winrates: 
@@ -181,11 +199,19 @@ print(f"""Selfish++ agent role winrates:
       Fascist: {round(splusagentwins[1]/(splusagentwins[1]+spaloss[1]), 3)} 
       Hitler: {round(splusagentwins[2]/(splusagentwins[2]+spaloss[2]), 3)}""")
 
+print(f"""DQL agent role winrates: 
+      Liberal: {round(dqlwins[0]/(dqlwins[0]+dqlloss[0]), 3)} 
+      Fascist: {round(dqlwins[1]/(dqlwins[1]+dqlloss[1]), 3)} 
+      Hitler: {round(dqlwins[2]/(dqlwins[2]+dqlloss[2]), 3)}""")
+
 print("======================================================")
 
 print(f"Random agent overall winrate: {round(((randomagentwins[0]+randomagentwins[1]+randomagentwins[2])/(randomagentwins[0]+randomagentwins[1]+randomagentwins[2]+raloss[0]+raloss[1]+raloss[2])),3)}")
 print(f"Selfish agent overall winrate: {round(((selfishagentwins[0]+selfishagentwins[1]+selfishagentwins[2])/(selfishagentwins[0]+selfishagentwins[1]+selfishagentwins[2]+saloss[0]+saloss[1]+saloss[2])),3)}")
 print(f"Selfish++ agent overall winrate: {round(((splusagentwins[0]+splusagentwins[1]+splusagentwins[2])/(splusagentwins[0]+splusagentwins[1]+splusagentwins[2]+spaloss[0]+spaloss[1]+spaloss[2])),3)}")
+print(f"DQL agent overall winrate: {round(((dqlwins[0]+dqlwins[1]+dqlwins[2])/(dqlwins[0]+dqlwins[1]+dqlwins[2]+dqlloss[0]+dqlloss[1]+dqlloss[2])),3)}")
+
+
 
 print(f"""Game ending scenarios
       Liberal Policy enacted: {round(libpol/n,3)}
