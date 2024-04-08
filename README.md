@@ -14,11 +14,11 @@ REQUIRED:
 - pip install keras-rl2
 - pip install stable-baselines3
 
-## To train the model
+## To train a new model
 - Delete SHModel.zip
 - Run sb3_dqn.py
 
 ## To run games
 - Run the game_environment.py file
 - If you want to change the number of games played, change the value of n in the file
-- Note: games over 1000 take a long time
+- Note: games over 1000 take a long time (~20 mins)
