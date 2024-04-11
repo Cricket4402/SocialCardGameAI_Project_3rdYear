@@ -24,6 +24,9 @@ class DQNLoader:
 
             # Train model from scratch, then save it
             self.model = DQN("MultiInputPolicy", self.env, verbose=1)
+
+            # Code snippet from Stable Baseline 3 DQN
+            # Source: https://stable-baselines3.readthedocs.io/en/v2.3.0/modules/dqn.html
             self.model.learn(total_timesteps=100, log_interval=1000)
             self.model.save(self.model_name)
 
@@ -74,6 +77,9 @@ class DQNLoader:
     # Test the model performance against the environment
     def evaluate_model(self):
         print("Evaluating agent...")
+
+        # Code snippet from Stable Baseline 3 Examples
+        # Source: https://stable-baselines3.readthedocs.io/en/master/guide/examples.html
         vec_env = self.model.get_env()
         obs = vec_env.reset()
         sum = 0
