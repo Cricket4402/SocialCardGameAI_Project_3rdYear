@@ -24,7 +24,7 @@ class DQNLoader:
 
             # Train model from scratch, then save it
             self.model = DQN("MultiInputPolicy", self.env, verbose=1)
-            self.model.learn(total_timesteps=1, log_interval=1000)
+            self.model.learn(total_timesteps=100, log_interval=1000)
             self.model.save(self.model_name)
 
             print(f"Model trained. Can be found in {self.model_path}.")

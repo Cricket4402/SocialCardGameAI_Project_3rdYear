@@ -4,7 +4,7 @@ import random
 import time
 
 # Number of games to run
-n = 13000
+n = 100
 
 libpol = 0
 faspol = 0
